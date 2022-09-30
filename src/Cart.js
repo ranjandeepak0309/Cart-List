@@ -3,7 +3,8 @@ import CartItem from './CartItem';
 class Cart extends React.Component{
     constructor(){
         super();
-        this.state= {products : [
+        this.state = {
+            products : [
             {
             price:2999,
             title:'SAMSUNG Phone',
@@ -28,8 +29,37 @@ class Cart extends React.Component{
           
          }
         ]
-        // this.increaseQuantity = this.increaseQuantity.bind(this)
+       
     }
+}
+handleIncreaseQuantity = (item) => {
+    console.log('hey pls increse the qty of', item);
+    const {products} = this.state;
+    const index = products.indexOf(item);
+    products[index].qty += 1;
+    this.setState({
+    products : products
+    })
+}
+handleDecreaseQuantity = (item) => {
+    console.log('hey pls decrese the qty of', item);
+    const {products} = this.state;
+    const index = products.indexOf(item);
+    if(products[index].qty===1){
+        return;
+    }
+    products[index].qty -= 1;
+    this.setState({
+        products : products
+    })
+}
+handleDeleteProduct = (id)=>{
+    const {products} = this.state;
+    const deleteItems = products.filter((deleteditems) => deleteditems.id !== id);
+    this.setState({
+        products:deleteItems
+    })
+
 }
     render(){
         const {products} = this.state;
@@ -37,12 +67,18 @@ class Cart extends React.Component{
         return(
            
             <div className="cart">
-                {products.map((eachProduct) =>{
-                   return  <CartItem  eachProduct = {eachProduct} key ={eachProduct.id}/>
+                {products.map((item) =>{
+                return(
+                 <CartItem 
+                item ={item} 
+                key ={item.id}
+                onIncreaseQuantity = {this.handleIncreaseQuantity}
+                onDecreaseQuantity = {this.handleDecreaseQuantity}
+                onDeleteProduct = {this.handleDeleteProduct}
+                /> )
 
                 })}
-               
-
+             
             </div>
         );
     }
