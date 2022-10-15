@@ -2,7 +2,8 @@ import React from 'react';
 // import CartItem from './CartItem';
 import Cart from './Cart';
 import Navbar from './Navbar'
-
+// import * as  firebase from 'firebase';
+// import { initializeApp } from "firebase/app";
 class App extends React.Component {
   // const name = 'Deepak';
   constructor() {
