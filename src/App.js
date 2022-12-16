@@ -1,45 +1,34 @@
 import React from 'react';
 // import CartItem from './CartItem';
 import Cart from './Cart';
-import Navbar from './Navbar'
+import Navbar from './Navbar';
+import db from './index';
 // import * as  firebase from 'firebase';
-// import { initializeApp } from "firebase/app";
+import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 class App extends React.Component {
   // const name = 'Deepak';
   constructor() {
     super();
     this.state = {
       products: [
-        {
-          price: 2999,
-          initialPrice: 2999,
-          title: 'SAMSUNG Phone',
-          qty: 1,
-          img: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=327&q=80',
-          id: 1
-
-        }, {
-          price: 999,
-          initialPrice: 999,
-          title: 'Watch',
-          qty: 1,
-          img: 'https://images.unsplash.com/photo-1630905997561-4e240c7c5edd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80',
-          id: 2
-
-        },
-        {
-          price: 4999,
-          initialPrice: 4999,
-          title: 'SAMSUNG Laptop',
-          qty: 1,
-          img: 'https://images.unsplash.com/photo-1661961110372-8a7682543120?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-          id: 3
-
-        }
+        
       ]
 
     }
   }
+  componentDidMount () {
+
+async function getCities() {
+  const citiesCol = collection(db, 'products');
+  const citySnapshot = await getDocs(citiesCol);
+  const cityList = citySnapshot.docs.map(doc => doc.data());
+  const k = cityList;
+  console.log(k);
+}
+getCities();
+  }
+  
+  
   handleIncreaseQuantity = (item) => {
     console.log('hey pls increse the qty of', item);
     const { products } = this.state;
@@ -91,6 +80,8 @@ class App extends React.Component {
     return cartTotal;
   }
   render(props) {
+  console.log(db);
+    
     const { products } = this.state;
     return (
 
